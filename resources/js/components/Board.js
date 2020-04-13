@@ -21,7 +21,11 @@ class Board extends React.Component {
 			],
             pieces: [
                 {id: 'K', type: 'K', color: 'B', number: 1},
-                {id: 'Q1', type: 'Q', color: 'W', number: 2}
+                {id: 'Q1', type: 'Q', color: 'W', number: 2},
+                {id: 'B1', type: 'B', color: 'B', number: 3},
+                {id: 'N1', type: 'N', color: 'B', number: 4},
+                {id: 'R1', type: 'R', color: 'B', number: 5},
+                {id: 'P1', type: 'P', color: 'W', number: 6},
             ]
 		};
 	}
