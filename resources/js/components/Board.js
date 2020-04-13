@@ -1,5 +1,4 @@
 import React from 'react';
-import './Board.css'
 import Number from "./Number";
 
 class Board extends React.Component {
@@ -36,7 +35,7 @@ class Board extends React.Component {
 		});
 
 		return (
-			<div className="board-holder">
+			<div className="d-flex justify-content-center">
 				<div className="board">
 					{rows}
 				</div>
