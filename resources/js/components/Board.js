@@ -18,14 +18,19 @@ class Board extends React.Component {
 				[{number: 28, color: 'red'}, {number: 29, color: 'black'}, {number: 30, color: 'red'}],
 				[{number: 31, color: 'black'}, {number: 32, color: 'red'}, {number: 33, color: 'black'}],
 				[{number: 34, color: 'red'}, {number: 35, color: 'black'}, {number: 36, color: 'red'}]
-			]
+			],
+            pieces: [
+                {id: 'K', type: 'K', color: 'B', number: 1},
+                {id: 'Q1', type: 'Q', color: 'W', number: 2}
+            ]
 		};
 	}
 
 	render() {
 		const rows = this.state.rows.map((row, i) => {
 			const currentRow = row.map((number) => {
-				return <Number number={number.number} color={number.color} key={number.number}/>;
+			    let piece = this.state.pieces.filter((e) => e.number === number.number);
+				return <Number number={number.number} color={number.color} key={number.number} piece={piece[0] ?? null}/>;
 			});
 			return (
 				<div className="row" key={i}>
