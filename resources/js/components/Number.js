@@ -13,7 +13,22 @@ class Number extends React.Component {
         this.state = {
 
         };
+        //this.onClickPiece = this.props.onClickPiece.bind(this);
     }
+
+    /*onClickPiece = () => {
+        this.props.onClickPiece();
+    }*/
+
+    /*onClickPiece = e => {
+        this.props.onClickPiece(e);
+    };*/
+
+    //onClickPiece() {
+        //alert('pug');
+        //this.props.onClickPiece();
+        //this.props.onClickPiece(this.props.type);
+    //}
 
     render() {
         let piece = '';
@@ -44,7 +59,7 @@ class Number extends React.Component {
             piece = <FontAwesomeIcon className={`piece ${this.props.piece.color === 'W' ? 'piece-white' : 'piece-black'}`} icon={type}/>;
         }
         return (
-            <div className="square">
+            <div className={`square ${this.props.piece ? 'cursor-pointer' : ''}`} onClick={this.props.onClickPiece}>
                 <span className={`number ${this.props.color}`}>{this.props.number}</span>
                 {piece}
             </div>

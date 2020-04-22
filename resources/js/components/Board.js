@@ -30,11 +30,15 @@ class Board extends React.Component {
 		};
 	}
 
+	clickPiece(number) {
+        alert(number.piece)
+    }
+
 	render() {
 		const rows = this.state.rows.map((row, i) => {
 			const currentRow = row.map((number) => {
 			    let piece = this.state.pieces.filter((e) => e.number === number.number);
-				return <Number number={number.number} color={number.color} key={number.number} piece={piece[0] ?? null}/>;
+				return <Number number={number.number} color={number.color} key={number.number} piece={piece[0] ?? null} onClickPiece={() => this.clickPiece(number)}/>;
 			});
 			return (
 				<div className="row" key={i}>
