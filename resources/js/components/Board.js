@@ -13,82 +13,121 @@ class Board extends React.Component {
 		this.state = {
 			rows: [
 				[
-				    {number: 1, color: 'red', piece: {type: faChessKing, color: 'black'}, moving: false},
-                    {number: 2, color: 'black', piece: {type: faChessQueen, color: 'white'}, moving: false},
-                    {number: 3, color: 'red', piece: {type: faChessBishop, color: 'black'}, moving: false}
+				    {number: 1, color: 'red', piece: {type: faChessKing, color: 'black'}, moving: false, possible: false},
+                    {number: 2, color: 'black', piece: {type: faChessQueen, color: 'white'}, moving: false, possible: false},
+                    {number: 3, color: 'red', piece: {type: faChessBishop, color: 'black'}, moving: false, possible: false}
                 ],
 				[
-				    {number: 4, color: 'black', piece: {type: faChessKnight, color: 'white'}, moving: false},
-                    {number: 5, color: 'red', piece: {type: faChessRook, color: 'black'}, moving: false},
-                    {number: 6, color: 'red', piece: {type: faChessPawn, color: 'white'}, moving: false}
+				    {number: 4, color: 'black', piece: {type: faChessKnight, color: 'white'}, moving: false, possible: false},
+                    {number: 5, color: 'red', piece: {type: faChessRook, color: 'black'}, moving: false, possible: false},
+                    {number: 6, color: 'red', piece: {type: faChessPawn, color: 'white'}, moving: false, possible: false}
                 ],
 				[
-				    {number: 7, color: 'red', piece: null, moving: false},
-                    {number: 8, color: 'black', piece: null, moving: false},
-                    {number: 9, color: 'red', piece: null, moving: false}
+				    {number: 7, color: 'red', piece: null, moving: false, possible: false},
+                    {number: 8, color: 'black', piece: null, moving: false, possible: false},
+                    {number: 9, color: 'red', piece: null, moving: false, possible: false}
                 ],
 				[
-				    {number: 10, color: 'black', piece: null, moving: false},
-                    {number: 11, color: 'black', piece: null, moving: false},
-                    {number: 12, color: 'red', piece: null, moving: false}
+				    {number: 10, color: 'black', piece: null, moving: false, possible: false},
+                    {number: 11, color: 'black', piece: null, moving: false, possible: false},
+                    {number: 12, color: 'red', piece: null, moving: false, possible: false}
                 ],
 				[
-				    {number: 13, color: 'black', piece: null, moving: false},
-                    {number: 14, color: 'red', piece: null, moving: false},
-                    {number: 15, color: 'black', piece: null, moving: false}
+				    {number: 13, color: 'black', piece: null, moving: false, possible: false},
+                    {number: 14, color: 'red', piece: null, moving: false, possible: false},
+                    {number: 15, color: 'black', piece: null, moving: false, possible: false}
                 ],
 				[
-				    {number: 16, color: 'red', piece: null, moving: false},
-                    {number: 17, color: 'black', piece: null, moving: false},
-                    {number: 18, color: 'red', piece: null, moving: false}
+				    {number: 16, color: 'red', piece: null, moving: false, possible: false},
+                    {number: 17, color: 'black', piece: null, moving: false, possible: false},
+                    {number: 18, color: 'red', piece: null, moving: false, possible: false}
                 ],
 				[
-				    {number: 19, color: 'black', piece: null, moving: false},
-                    {number: 20, color: 'black', piece: null, moving: false},
-                    {number: 21, color: 'red', piece: null, moving: false}
+				    {number: 19, color: 'black', piece: null, moving: false, possible: false},
+                    {number: 20, color: 'black', piece: null, moving: false, possible: false},
+                    {number: 21, color: 'red', piece: null, moving: false, possible: false}
                 ],
 				[
-				    {number: 22, color: 'black', piece: null, moving: false},
-                    {number: 23, color: 'red', piece: null, moving: false},
-                    {number: 24, color: 'black', piece: null, moving: false}
+				    {number: 22, color: 'black', piece: null, moving: false, possible: false},
+                    {number: 23, color: 'red', piece: null, moving: false, possible: false},
+                    {number: 24, color: 'black', piece: null, moving: false, possible: false}
                 ],
 				[
-				    {number: 25, color: 'red', piece: null, moving: false},
-                    {number: 26, color: 'black', piece: null, moving: false},
-                    {number: 27, color: 'red', piece: null, moving: false}
+				    {number: 25, color: 'red', piece: null, moving: false, possible: false},
+                    {number: 26, color: 'black', piece: null, moving: false, possible: false},
+                    {number: 27, color: 'red', piece: null, moving: false, possible: false}
 				],
 				[
-				    {number: 28, color: 'red', piece: null, moving: false},
-                    {number: 29, color: 'black', piece: null, moving: false},
-                    {number: 30, color: 'red', piece: null, moving: false}
+				    {number: 28, color: 'red', piece: null, moving: false, possible: false},
+                    {number: 29, color: 'black', piece: null, moving: false, possible: false},
+                    {number: 30, color: 'red', piece: null, moving: false, possible: false}
 				],
 				[
-				    {number: 31, color: 'black', piece: null, moving: false},
-                    {number: 32, color: 'red', piece: null, moving: false},
-                    {number: 33, color: 'black', piece: null, moving: false}
+				    {number: 31, color: 'black', piece: null, moving: false, possible: false},
+                    {number: 32, color: 'red', piece: null, moving: false, possible: false},
+                    {number: 33, color: 'black', piece: null, moving: false, possible: false}
 				],
 				[
-				    {number: 34, color: 'red', piece: null, moving: false},
-                    {number: 35, color: 'black', piece: null, moving: false},
-                    {number: 36, color: 'red', piece: null, moving: false}
+				    {number: 34, color: 'red', piece: null, moving: false, possible: false},
+                    {number: 35, color: 'black', piece: null, moving: false, possible: false},
+                    {number: 36, color: 'red', piece: null, moving: false, possible: false}
 				]
 			]
 		};
 	}
 
 	clickPiece(number) {
+	    const totalRows = 12;
+	    const totalColumns = 3;
+	    // get number row/column and set number piece as being moved
         let rowIndex = 0;
         let columnIndex = 0;
         let newRows = this.state.rows;
         for (let i = 0; i < newRows.length; i++) {
             for (let j = 0; j < newRows[i].length; j++) {
+                newRows[i][j].possible = false;
                 if (newRows[i][j].number === number.number) {
                     rowIndex = i;
                     columnIndex = j;
-                    newRows[i][j].moving = true;
+                    newRows[i][j].moving = !newRows[i][j].moving;
                 } else {
                     newRows[i][j].moving = false;
                 }
+            }
+        }
+        // set possible moves
+        if (newRows[rowIndex][columnIndex].moving) {
+            switch (number.piece.type) {
+                case faChessRook:
+                    // check left
+                    for (let i = columnIndex - 1; i > -1; i--) {
+                        newRows[rowIndex][i].possible = true;
+                        if (newRows[rowIndex][i].piece) {
+                            break;
+                        }
+                    }
+                    // check right
+                    for (let i = columnIndex + 1; i < totalColumns; i++) {
+                        newRows[rowIndex][i].possible = true;
+                        if (newRows[rowIndex][i].piece) {
+                            break;
+                        }
+                    }
+                    // check up
+                    for (let i = rowIndex - 1; i > -1; i--) {
+                        newRows[i][columnIndex].possible = true;
+                        if (newRows[i][columnIndex].piece) {
+                            break;
+                        }
+                    }
+                    // check down
+                    for (let i = rowIndex + 1; i < totalRows; i++) {
+                        newRows[i][columnIndex].possible = true;
+                        if (newRows[i][columnIndex].piece) {
+                            break;
+                        }
+                    }
+                    break;
             }
         }
         this.setState({rows: newRows});
@@ -98,8 +137,8 @@ class Board extends React.Component {
 		const rows = this.state.rows.map((row, i) => {
 			const currentRow = row.map((number) => {
                 return (
-                    <div className={`square ${number.piece ? 'cursor-pointer' : ''}`} onClick={() => this.clickPiece(number)}>
-                        <span className={`number ${number.color}`}>{number.number}</span>
+                    <div className={`square ${number.piece ? 'cursor-pointer' : ''}`} onClick={() => this.clickPiece(number)} key={number.number}>
+                        <span className={`number ${number.possible ? 'possible' : number.color}`}>{number.number}</span>
                         {number.piece ? <FontAwesomeIcon className={`piece piece-${number.piece.color} ${number.moving ? 'moving' : ''}`} icon={number.piece.type}/> : ''}
                     </div>
                 );
