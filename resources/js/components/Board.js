@@ -13,70 +13,85 @@ class Board extends React.Component {
 		this.state = {
 			rows: [
 				[
-				    {number: 1, color: 'red', piece: {type: faChessKing, color: 'black'}},
-                    {number: 2, color: 'black', piece: {type: faChessQueen, color: 'white'}},
-                    {number: 3, color: 'red', piece: {type: faChessBishop, color: 'black'}}
+				    {number: 1, color: 'red', piece: {type: faChessKing, color: 'black'}, moving: false},
+                    {number: 2, color: 'black', piece: {type: faChessQueen, color: 'white'}, moving: false},
+                    {number: 3, color: 'red', piece: {type: faChessBishop, color: 'black'}, moving: false}
                 ],
 				[
-				    {number: 4, color: 'black', piece: {type: faChessKnight, color: 'white'}},
-                    {number: 5, color: 'red', piece: {type: faChessRook, color: 'black'}},
-                    {number: 6, color: 'red', piece: {type: faChessPawn, color: 'white'}}
+				    {number: 4, color: 'black', piece: {type: faChessKnight, color: 'white'}, moving: false},
+                    {number: 5, color: 'red', piece: {type: faChessRook, color: 'black'}, moving: false},
+                    {number: 6, color: 'red', piece: {type: faChessPawn, color: 'white'}, moving: false}
                 ],
 				[
-				    {number: 7, color: 'red', piece: null},
-                    {number: 8, color: 'black', piece: null},
-                    {number: 9, color: 'red', piece: null}
+				    {number: 7, color: 'red', piece: null, moving: false},
+                    {number: 8, color: 'black', piece: null, moving: false},
+                    {number: 9, color: 'red', piece: null, moving: false}
                 ],
 				[
-				    {number: 10, color: 'black', piece: null},
-                    {number: 11, color: 'black', piece: null},
-                    {number: 12, color: 'red', piece: null}],
-				[
-				    {number: 13, color: 'black', piece: null},
-                    {number: 14, color: 'red', piece: null},
-                    {number: 15, color: 'black', piece: null}
+				    {number: 10, color: 'black', piece: null, moving: false},
+                    {number: 11, color: 'black', piece: null, moving: false},
+                    {number: 12, color: 'red', piece: null, moving: false}
                 ],
 				[
-				    {number: 16, color: 'red', piece: null},
-                    {number: 17, color: 'black', piece: null},
-                    {number: 18, color: 'red', piece: null}
+				    {number: 13, color: 'black', piece: null, moving: false},
+                    {number: 14, color: 'red', piece: null, moving: false},
+                    {number: 15, color: 'black', piece: null, moving: false}
                 ],
 				[
-				    {number: 19, color: 'black', piece: null},
-                    {number: 20, color: 'black', piece: null},
-                    {number: 21, color: 'red', piece: null}
+				    {number: 16, color: 'red', piece: null, moving: false},
+                    {number: 17, color: 'black', piece: null, moving: false},
+                    {number: 18, color: 'red', piece: null, moving: false}
                 ],
 				[
-				    {number: 22, color: 'black', piece: null},
-                    {number: 23, color: 'red', piece: null},
-                    {number: 24, color: 'black', piece: null}
+				    {number: 19, color: 'black', piece: null, moving: false},
+                    {number: 20, color: 'black', piece: null, moving: false},
+                    {number: 21, color: 'red', piece: null, moving: false}
                 ],
 				[
-				    {number: 25, color: 'red', piece: null},
-                    {number: 26, color: 'black', piece: null},
-                    {number: 27, color: 'red', piece: null}
+				    {number: 22, color: 'black', piece: null, moving: false},
+                    {number: 23, color: 'red', piece: null, moving: false},
+                    {number: 24, color: 'black', piece: null, moving: false}
+                ],
+				[
+				    {number: 25, color: 'red', piece: null, moving: false},
+                    {number: 26, color: 'black', piece: null, moving: false},
+                    {number: 27, color: 'red', piece: null, moving: false}
 				],
 				[
-				    {number: 28, color: 'red', piece: null},
-                    {number: 29, color: 'black', piece: null},
-                    {number: 30, color: 'red', piece: null}
+				    {number: 28, color: 'red', piece: null, moving: false},
+                    {number: 29, color: 'black', piece: null, moving: false},
+                    {number: 30, color: 'red', piece: null, moving: false}
 				],
 				[
-				    {number: 31, color: 'black', piece: null},
-                    {number: 32, color: 'red', piece: null},
-                    {number: 33, color: 'black', piece: null}
+				    {number: 31, color: 'black', piece: null, moving: false},
+                    {number: 32, color: 'red', piece: null, moving: false},
+                    {number: 33, color: 'black', piece: null, moving: false}
 				],
 				[
-				    {number: 34, color: 'red', piece: null},
-                    {number: 35, color: 'black', piece: null},
-                    {number: 36, color: 'red', piece: null}
+				    {number: 34, color: 'red', piece: null, moving: false},
+                    {number: 35, color: 'black', piece: null, moving: false},
+                    {number: 36, color: 'red', piece: null, moving: false}
 				]
 			]
 		};
 	}
 
 	clickPiece(number) {
-        alert(number.piece.color);
+        let rowIndex = 0;
+        let columnIndex = 0;
+        let newRows = this.state.rows;
+        for (let i = 0; i < newRows.length; i++) {
+            for (let j = 0; j < newRows[i].length; j++) {
+                if (newRows[i][j].number === number.number) {
+                    rowIndex = i;
+                    columnIndex = j;
+                    newRows[i][j].moving = true;
+                } else {
+                    newRows[i][j].moving = false;
+                }
+            }
+        }
+        this.setState({rows: newRows});
     }
 
 	render() {
@@ -85,7 +100,7 @@ class Board extends React.Component {
                 return (
                     <div className={`square ${number.piece ? 'cursor-pointer' : ''}`} onClick={() => this.clickPiece(number)}>
                         <span className={`number ${number.color}`}>{number.number}</span>
-                        {number.piece ? <FontAwesomeIcon className={`piece piece-${number.piece.color}`} icon={number.piece.type}/> : ''}
+                        {number.piece ? <FontAwesomeIcon className={`piece piece-${number.piece.color} ${number.moving ? 'moving' : ''}`} icon={number.piece.type}/> : ''}
                     </div>
                 );
 			});
