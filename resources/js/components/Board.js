@@ -29,13 +29,13 @@ class Board extends React.Component {
                 ],
 				[
 				    {number: 10, color: 'black', piece: null, moving: false, possible: false},
-                    {number: 11, color: 'black', piece: null, moving: false, possible: false},
+                    {number: 11, color: 'black', piece: {type: faChessPawn, color: 'white'}, moving: false, possible: false},
                     {number: 12, color: 'red', piece: null, moving: false, possible: false}
                 ],
 				[
 				    {number: 13, color: 'black', piece: null, moving: false, possible: false},
                     {number: 14, color: 'red', piece: null, moving: false, possible: false},
-                    {number: 15, color: 'black', piece: null, moving: false, possible: false}
+                    {number: 15, color: 'black', piece: {type: faChessBishop, color: 'black'}, moving: false, possible: false}
                 ],
 				[
 				    {number: 16, color: 'red', piece: null, moving: false, possible: false},
@@ -98,36 +98,64 @@ class Board extends React.Component {
         // set possible moves
         if (newRows[rowIndex][columnIndex].moving) {
             switch (number.piece.type) {
+                case faChessQueen:
                 case faChessRook:
                     // check left
                     for (let i = columnIndex - 1; i > -1; i--) {
-                        newRows[rowIndex][i].possible = true;
                         if (newRows[rowIndex][i].piece) {
+                            if (newRows[rowIndex][i].piece.color !== number.piece.color) {
+                                newRows[rowIndex][i].possible = true;
+                            }
                             break;
                         }
+                        newRows[rowIndex][i].possible = true;
                     }
                     // check right
                     for (let i = columnIndex + 1; i < totalColumns; i++) {
-                        newRows[rowIndex][i].possible = true;
                         if (newRows[rowIndex][i].piece) {
+                            if (newRows[rowIndex][i].piece.color !== number.piece.color) {
+                                newRows[rowIndex][i].possible = true;
+                            }
                             break;
                         }
+                        newRows[rowIndex][i].possible = true;
                     }
                     // check up
                     for (let i = rowIndex - 1; i > -1; i--) {
-                        newRows[i][columnIndex].possible = true;
                         if (newRows[i][columnIndex].piece) {
+                            if (newRows[i][columnIndex].piece.color !== number.piece.color) {
+                                newRows[i][columnIndex].possible = true;
+                            }
                             break;
                         }
+                        newRows[i][columnIndex].possible = true;
                     }
                     // check down
                     for (let i = rowIndex + 1; i < totalRows; i++) {
-                        newRows[i][columnIndex].possible = true;
                         if (newRows[i][columnIndex].piece) {
+                            if (newRows[i][columnIndex].piece.color !== number.piece.color) {
+                                newRows[i][columnIndex].possible = true;
+                            }
                             break;
                         }
+                        newRows[i][columnIndex].possible = true;
                     }
                     break;
+                case faChessBishop:
+                    // check top left
+                    let checkRow = rowIndex - 1;
+                    let checkColumn = columnIndex - 1;
+                    while (checkRow > -1 && checkColumn > -1) {
+                        if (newRows[checkRow][checkColumn].piece) {
+                            if (newRows[checkRow][checkColumn].piece.color !== number.piece.color) {
+                                newRows[checkRow][checkColumn].possible = true;
+                            }
+                            break;
+                        }
+                        newRows[checkRow][checkColumn].possible = true;
+                        checkRow--;
+                        checkColumn--;
+                    }
             }
         }
         this.setState({rows: newRows});
