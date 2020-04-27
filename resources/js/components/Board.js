@@ -18,9 +18,9 @@ class Board extends React.Component {
                     {number: 3, color: 'red', piece: {type: faChessBishop, color: 'black'}, moving: false, possible: false}
                 ],
 				[
-				    {number: 4, color: 'black', piece: {type: faChessKnight, color: 'white'}, moving: false, possible: false},
+				    {number: 4, color: 'black', piece: {type: faChessKnight, color: 'black'}, moving: false, possible: false},
                     {number: 5, color: 'red', piece: {type: faChessRook, color: 'black'}, moving: false, possible: false},
-                    {number: 6, color: 'red', piece: {type: faChessPawn, color: 'white'}, moving: false, possible: false}
+                    {number: 6, color: 'red', piece: {type: faChessPawn, color: 'black'}, moving: false, possible: false}
                 ],
 				[
 				    {number: 7, color: 'red', piece: null, moving: false, possible: false},
@@ -99,6 +99,15 @@ class Board extends React.Component {
         if (newRows[rowIndex][columnIndex].moving) {
             switch (number.piece.type) {
                 case faChessQueen:
+                    this.checkDirection(number.piece.color, columnIndex, rowIndex, -1, 0, null);
+                    this.checkDirection(number.piece.color, columnIndex, rowIndex, 1, 0, null);
+                    this.checkDirection(number.piece.color, columnIndex, rowIndex, 0, -1, null);
+                    this.checkDirection(number.piece.color, columnIndex, rowIndex, 0, 1, null);
+                    this.checkDirection(number.piece.color, columnIndex, rowIndex, -1, -1, null);
+                    this.checkDirection(number.piece.color, columnIndex, rowIndex, -1, 1, null);
+                    this.checkDirection(number.piece.color, columnIndex, rowIndex, 1, -1, null);
+                    this.checkDirection(number.piece.color, columnIndex, rowIndex, 1, 1, null);
+                    break;
                 case faChessRook:
                     this.checkDirection(number.piece.color, columnIndex, rowIndex, -1, 0, null);
                     this.checkDirection(number.piece.color, columnIndex, rowIndex, 1, 0, null);
@@ -121,7 +130,7 @@ class Board extends React.Component {
         let newRows = this.state.rows;
         let xCheck = xStart + xDirection;
         let yCheck = yStart + yDirection;
-        while ((xDirection === 0 || (xDirection < 0 && xCheck > -1) || (xDirection > 0 && xCheck <= totalColumns)) && (yDirection === 0 || (yDirection < 0 && yCheck > -1) || (yDirection > 0 && yCheck <= totalRows))) {
+        while ((xDirection === 0 || (xDirection < 0 && xCheck > -1) || (xDirection > 0 && xCheck < totalColumns)) && (yDirection === 0 || (yDirection < 0 && yCheck > -1) || (yDirection > 0 && yCheck < totalRows))) {
             if (newRows[yCheck][xCheck].piece) {
                 if (newRows[yCheck][xCheck].piece.color !== color) {
                     newRows[yCheck][xCheck].possible = true;
