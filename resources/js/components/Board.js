@@ -99,49 +99,62 @@ class Board extends React.Component {
         if (newRows[rowIndex][columnIndex].moving) {
             switch (number.piece.type) {
                 case faChessQueen:
-                    this.checkDirection(number.piece.color, columnIndex, rowIndex, -1, 0, null);
-                    this.checkDirection(number.piece.color, columnIndex, rowIndex, 1, 0, null);
-                    this.checkDirection(number.piece.color, columnIndex, rowIndex, 0, -1, null);
-                    this.checkDirection(number.piece.color, columnIndex, rowIndex, 0, 1, null);
-                    this.checkDirection(number.piece.color, columnIndex, rowIndex, -1, -1, null);
-                    this.checkDirection(number.piece.color, columnIndex, rowIndex, -1, 1, null);
-                    this.checkDirection(number.piece.color, columnIndex, rowIndex, 1, -1, null);
-                    this.checkDirection(number.piece.color, columnIndex, rowIndex, 1, 1, null);
+                    this.checkDirections(number.piece.color, columnIndex, rowIndex, [[-1, 0], [1, 0], [0, -1], [0, 1], [-1, -1], [-1, 1], [1, -1], [1, 1]]);
                     break;
                 case faChessRook:
-                    this.checkDirection(number.piece.color, columnIndex, rowIndex, -1, 0, null);
-                    this.checkDirection(number.piece.color, columnIndex, rowIndex, 1, 0, null);
-                    this.checkDirection(number.piece.color, columnIndex, rowIndex, 0, -1, null);
-                    this.checkDirection(number.piece.color, columnIndex, rowIndex, 0, 1, null);
+                    this.checkDirections(number.piece.color, columnIndex, rowIndex, [[-1, 0], [1, 0], [0, -1], [0, 1]]);
                     break;
                 case faChessBishop:
-                    this.checkDirection(number.piece.color, columnIndex, rowIndex, -1, -1, null);
-                    this.checkDirection(number.piece.color, columnIndex, rowIndex, -1, 1, null);
-                    this.checkDirection(number.piece.color, columnIndex, rowIndex, 1, -1, null);
-                    this.checkDirection(number.piece.color, columnIndex, rowIndex, 1, 1, null);
+                    this.checkDirections(number.piece.color, columnIndex, rowIndex, [[-1, -1], [-1, 1], [1, -1], [1, 1]]);
+                    break;
+                case faChessKnight:
+                    this.checkKnight(number.piece.color, columnIndex, rowIndex);
             }
         }
         this.setState({rows: newRows});
     }
 
-    checkDirection(color, xStart, yStart, xDirection, yDirection, maxDistance) {
+    checkKnight(color, xStart, yStart) {
         const totalRows = 12;
         const totalColumns = 3;
         let newRows = this.state.rows;
-        let xCheck = xStart + xDirection;
-        let yCheck = yStart + yDirection;
-        while ((xDirection === 0 || (xDirection < 0 && xCheck > -1) || (xDirection > 0 && xCheck < totalColumns)) && (yDirection === 0 || (yDirection < 0 && yCheck > -1) || (yDirection > 0 && yCheck < totalRows))) {
-            if (newRows[yCheck][xCheck].piece) {
-                if (newRows[yCheck][xCheck].piece.color !== color) {
+	    let check = [[-2, 1], [-1, 2], [1, 2], [2, 1], [2, -1], [1, -2], [-1, -2], [-2, -1]];
+	    for (let i = 0; i < check.length; i++) {
+	        let xCheck = xStart + check[i][0];
+	        let yCheck = yStart + check[i][1];
+	        if (xCheck > -1 && xCheck < totalColumns && yCheck > -1 && yCheck < totalRows) {
+                if (newRows[yCheck][xCheck].piece && newRows[yCheck][xCheck].piece.color === color) {
+                    newRows[yCheck][xCheck].possible = false;
+                } else {
                     newRows[yCheck][xCheck].possible = true;
-                    xCheck = xCheck + xDirection;
-                    yCheck = yCheck + yDirection;
                 }
-                break;
             }
-            newRows[yCheck][xCheck].possible = true;
-            xCheck = xCheck + xDirection;
-            yCheck = yCheck + yDirection;
+        }
+        this.setState({rows: newRows});
+    }
+
+    checkDirections(color, xStart, yStart, directions) {
+        const totalRows = 12;
+        const totalColumns = 3;
+        let newRows = this.state.rows;
+        for (let i = 0; i < directions.length; i++) {
+            let xDirection = directions[i][0];
+            let yDirection = directions[i][1];
+            let xCheck = xStart + xDirection;
+            let yCheck = yStart + yDirection;
+            while ((xDirection === 0 || (xDirection < 0 && xCheck > -1) || (xDirection > 0 && xCheck < totalColumns)) && (yDirection === 0 || (yDirection < 0 && yCheck > -1) || (yDirection > 0 && yCheck < totalRows))) {
+                if (newRows[yCheck][xCheck].piece) {
+                    if (newRows[yCheck][xCheck].piece.color !== color) {
+                        newRows[yCheck][xCheck].possible = true;
+                        xCheck = xCheck + xDirection;
+                        yCheck = yCheck + yDirection;
+                    }
+                    break;
+                }
+                newRows[yCheck][xCheck].possible = true;
+                xCheck = xCheck + xDirection;
+                yCheck = yCheck + yDirection;
+            }
         }
         this.setState({rows: newRows});
     }
