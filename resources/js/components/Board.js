@@ -77,9 +77,29 @@ class Board extends React.Component {
 	}
 
 	clickPiece(number) {
-        const totalRows = 12;
-        const totalColumns = 3;
-	    // get number row/column and set number piece as being moved
+        if (number.piece) {
+            let position = this.pickupPieceAtNumber(number);
+            // set possible moves
+            if (this.state.rows[position[1]][position[0]].moving) {
+                switch (number.piece.type) {
+                    case faChessQueen:
+                        this.checkDirections(number.piece.color, position[0], position[1], [[-1, 0], [1, 0], [0, -1], [0, 1], [-1, -1], [-1, 1], [1, -1], [1, 1]]);
+                        break;
+                    case faChessRook:
+                        this.checkDirections(number.piece.color, position[0], position[1], [[-1, 0], [1, 0], [0, -1], [0, 1]]);
+                        break;
+                    case faChessBishop:
+                        this.checkDirections(number.piece.color, position[0], position[1], [[-1, -1], [-1, 1], [1, -1], [1, 1]]);
+                        break;
+                    case faChessKnight:
+                        this.checkKnight(number.piece.color, position[0], position[1]);
+                }
+            }
+        }
+    }
+
+    pickupPieceAtNumber(number) {
+        // get number row/column and set number piece as being moved
         let rowIndex = 0;
         let columnIndex = 0;
         let newRows = this.state.rows;
@@ -95,23 +115,8 @@ class Board extends React.Component {
                 }
             }
         }
-        // set possible moves
-        if (newRows[rowIndex][columnIndex].moving) {
-            switch (number.piece.type) {
-                case faChessQueen:
-                    this.checkDirections(number.piece.color, columnIndex, rowIndex, [[-1, 0], [1, 0], [0, -1], [0, 1], [-1, -1], [-1, 1], [1, -1], [1, 1]]);
-                    break;
-                case faChessRook:
-                    this.checkDirections(number.piece.color, columnIndex, rowIndex, [[-1, 0], [1, 0], [0, -1], [0, 1]]);
-                    break;
-                case faChessBishop:
-                    this.checkDirections(number.piece.color, columnIndex, rowIndex, [[-1, -1], [-1, 1], [1, -1], [1, 1]]);
-                    break;
-                case faChessKnight:
-                    this.checkKnight(number.piece.color, columnIndex, rowIndex);
-            }
-        }
         this.setState({rows: newRows});
+        return [columnIndex, rowIndex];
     }
 
     checkKnight(color, xStart, yStart) {
