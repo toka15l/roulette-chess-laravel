@@ -11,16 +11,41 @@ class Board extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
+		    playerColor: 'white',
+		    b1: {type: faChessPawn, color: 'black', hasMoved: false},
+            b2: {type: faChessPawn, color: 'black', hasMoved: false},
+            b3: {type: faChessPawn, color: 'black', hasMoved: false},
+            b4: {type: faChessPawn, color: 'black', hasMoved: false},
+            b5: {type: faChessPawn, color: 'black', hasMoved: false},
+            b6: {type: faChessBishop, color: 'black', hasMoved: false},
+            b7: {type: faChessBishop, color: 'black', hasMoved: false},
+            b8: {type: faChessKnight, color: 'black', hasMoved: false},
+            b9: {type: faChessKnight, color: 'black', hasMoved: false},
+            b10: {type: faChessRook, color: 'black', hasMoved: false},
+            b11: {type: faChessRook, color: 'black', hasMoved: false},
+            b12: {type: faChessKing, color: 'black', hasMoved: false},
+            w1: {type: faChessPawn, color: 'white', hasMoved: false},
+            w2: {type: faChessPawn, color: 'white', hasMoved: false},
+            w3: {type: faChessPawn, color: 'white', hasMoved: false},
+            w4: {type: faChessPawn, color: 'white', hasMoved: false},
+            w5: {type: faChessPawn, color: 'white', hasMoved: false},
+            w6: {type: faChessBishop, color: 'white', hasMoved: false},
+            w7: {type: faChessBishop, color: 'white', hasMoved: false},
+            w8: {type: faChessKnight, color: 'white', hasMoved: false},
+            w9: {type: faChessKnight, color: 'white', hasMoved: false},
+            w10: {type: faChessRook, color: 'white', hasMoved: false},
+            w11: {type: faChessRook, color: 'white', hasMoved: false},
+            w12: {type: faChessKing, color: 'white', hasMoved: false},
 			rows: [
 				[
-				    {number: 1, color: 'red', piece: {type: faChessKing, color: 'black'}, moving: false, possible: false},
-                    {number: 2, color: 'black', piece: {type: faChessQueen, color: 'white'}, moving: false, possible: false},
-                    {number: 3, color: 'red', piece: {type: faChessBishop, color: 'black'}, moving: false, possible: false}
+				    {number: 1, color: 'red', piece: null, moving: false, possible: false},
+                    {number: 2, color: 'black', piece: null, moving: false, possible: false},
+                    {number: 3, color: 'red', piece: null, moving: false, possible: false}
                 ],
 				[
-				    {number: 4, color: 'black', piece: {type: faChessKnight, color: 'black'}, moving: false, possible: false},
-                    {number: 5, color: 'red', piece: {type: faChessRook, color: 'black'}, moving: false, possible: false},
-                    {number: 6, color: 'red', piece: {type: faChessPawn, color: 'black'}, moving: false, possible: false}
+				    {number: 4, color: 'black', piece: null, moving: false, possible: false},
+                    {number: 5, color: 'red', piece: null, moving: false, possible: false},
+                    {number: 6, color: 'red', piece: null, moving: false, possible: false}
                 ],
 				[
 				    {number: 7, color: 'red', piece: null, moving: false, possible: false},
@@ -29,12 +54,12 @@ class Board extends React.Component {
                 ],
 				[
 				    {number: 10, color: 'black', piece: null, moving: false, possible: false},
-                    {number: 11, color: 'black', piece: {type: faChessPawn, color: 'white'}, moving: false, possible: false},
+                    {number: 11, color: 'black', piece: null, moving: false, possible: false},
                     {number: 12, color: 'red', piece: null, moving: false, possible: false}
                 ],
 				[
 				    {number: 13, color: 'black', piece: null, moving: false, possible: false},
-                    {number: 14, color: 'red', piece: {type: faChessBishop, color: 'black'}, moving: false, possible: false},
+                    {number: 14, color: 'red', piece: null, moving: false, possible: false},
                     {number: 15, color: 'black', piece: null, moving: false, possible: false}
                 ],
 				[
@@ -76,6 +101,31 @@ class Board extends React.Component {
 		};
 	}
 
+    componentDidMount() {
+	    let startingPieces = [
+	        [1, this.state.b10], [2, this.state.b12], [3, this.state.b11],
+            [4, this.state.b1], [5, this.state.b6], [6, this.state.b7],
+            [7, this.state.b8], [8, this.state.b9], [9, this.state.b2],
+            [10, this.state.b3], [11, this.state.b4], [12, this.state.b5],
+            [25, this.state.w1], [26, this.state.w2], [27, this.state.w3],
+            [28, this.state.w4], [29, this.state.w8], [30, this.state.w9],
+            [31, this.state.w6], [32, this.state.w7], [33, this.state.w5],
+            [34, this.state.w10], [35, this.state.w12], [36, this.state.w11]
+        ];
+        let newRows = this.state.rows;
+        for (let i = 0; i < newRows.length; i++) {
+            for (let j = 0; j < newRows[i].length; j++) {
+                for (let k=0; k < startingPieces.length; k++) {
+                    if (startingPieces[k][0] === newRows[i][j].number) {
+                        newRows[i][j].piece = startingPieces[k][1];
+                        break;
+                    }
+                }
+            }
+        }
+        this.setState({rows: newRows});
+    }
+
 	clickPiece(number) {
         if (number.piece) {
             let position = this.pickupPieceAtNumber(number);
@@ -93,6 +143,9 @@ class Board extends React.Component {
                         break;
                     case faChessKnight:
                         this.checkKnight(number.piece.color, position[0], position[1]);
+                        break;
+                    case faChessPawn:
+                        this.checkPawn(number.piece.color, position[0], position[1]);
                 }
             }
         }
@@ -117,6 +170,10 @@ class Board extends React.Component {
         }
         this.setState({rows: newRows});
         return [columnIndex, rowIndex];
+    }
+
+    checkPawn(color, xStart, yStart) {
+
     }
 
     checkKnight(color, xStart, yStart) {
