@@ -11,6 +11,8 @@ class Board extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
+            totalRows: 12,
+            totalColumns: 3,
 		    playerColor: 'white',
 		    b1: {type: faChessPawn, color: 'black', hasMoved: false},
             b2: {type: faChessPawn, color: 'black', hasMoved: false},
@@ -173,7 +175,6 @@ class Board extends React.Component {
     }
 
     checkPawn(color, xStart, yStart) {
-        const totalColumns = 3;
 	    let direction = -1;
         if (color === 'black') {
             direction = 1;
@@ -192,21 +193,19 @@ class Board extends React.Component {
             newRows[yStart + 1 * direction][xStart - 1].possible = true;
         }
         // right take position
-        if (xStart + 1 < totalColumns && newRows[yStart + 1 * direction][xStart + 1].piece && newRows[yStart + 1 * direction][xStart + 1].piece.color !== color) {
+        if (xStart + 1 < this.state.totalColumns && newRows[yStart + 1 * direction][xStart + 1].piece && newRows[yStart + 1 * direction][xStart + 1].piece.color !== color) {
             newRows[yStart + 1 * direction][xStart + 1].possible = true;
         }
         this.setState({rows: newRows});
     }
 
     checkKnight(color, xStart, yStart) {
-        const totalRows = 12;
-        const totalColumns = 3;
         let newRows = this.state.rows;
 	    let check = [[-2, 1], [-1, 2], [1, 2], [2, 1], [2, -1], [1, -2], [-1, -2], [-2, -1]];
 	    for (let i = 0; i < check.length; i++) {
 	        let xCheck = xStart + check[i][0];
 	        let yCheck = yStart + check[i][1];
-	        if (xCheck > -1 && xCheck < totalColumns && yCheck > -1 && yCheck < totalRows) {
+	        if (xCheck > -1 && xCheck < this.state.totalColumns && yCheck > -1 && yCheck < this.state.totalRows) {
                 if (newRows[yCheck][xCheck].piece && newRows[yCheck][xCheck].piece.color === color) {
                     newRows[yCheck][xCheck].possible = false;
                 } else {
@@ -218,15 +217,13 @@ class Board extends React.Component {
     }
 
     checkDirections(color, xStart, yStart, directions) {
-        const totalRows = 12;
-        const totalColumns = 3;
         let newRows = this.state.rows;
         for (let i = 0; i < directions.length; i++) {
             let xDirection = directions[i][0];
             let yDirection = directions[i][1];
             let xCheck = xStart + xDirection;
             let yCheck = yStart + yDirection;
-            while ((xDirection === 0 || (xDirection < 0 && xCheck > -1) || (xDirection > 0 && xCheck < totalColumns)) && (yDirection === 0 || (yDirection < 0 && yCheck > -1) || (yDirection > 0 && yCheck < totalRows))) {
+            while ((xDirection === 0 || (xDirection < 0 && xCheck > -1) || (xDirection > 0 && xCheck < this.state.totalColumns)) && (yDirection === 0 || (yDirection < 0 && yCheck > -1) || (yDirection > 0 && yCheck < this.state.totalRows))) {
                 if (newRows[yCheck][xCheck].piece) {
                     if (newRows[yCheck][xCheck].piece.color !== color) {
                         newRows[yCheck][xCheck].possible = true;
