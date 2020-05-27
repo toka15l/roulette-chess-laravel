@@ -173,7 +173,29 @@ class Board extends React.Component {
     }
 
     checkPawn(color, xStart, yStart) {
-
+        const totalColumns = 3;
+	    let direction = -1;
+        if (color === 'black') {
+            direction = 1;
+        }
+        let newRows = this.state.rows;
+        // immediate forward position
+        if (!newRows[yStart + 1 * direction][xStart].piece) {
+            newRows[yStart + 1 * direction][xStart].possible = true;
+        }
+        // far forward position
+        if (!newRows[yStart + 1 * direction][xStart].piece && !newRows[yStart + 2 * direction][xStart].piece && !newRows[yStart][xStart].piece.hasMoved) {
+            newRows[yStart + 2 * direction][xStart].possible = true;
+        }
+        // left take position
+        if (xStart - 1 >= 0 && newRows[yStart + 1 * direction][xStart - 1].piece && newRows[yStart + 1 * direction][xStart - 1].piece.color !== color) {
+            newRows[yStart + 1 * direction][xStart - 1].possible = true;
+        }
+        // right take position
+        if (xStart + 1 < totalColumns && newRows[yStart + 1 * direction][xStart + 1].piece && newRows[yStart + 1 * direction][xStart + 1].piece.color !== color) {
+            newRows[yStart + 1 * direction][xStart + 1].possible = true;
+        }
+        this.setState({rows: newRows});
     }
 
     checkKnight(color, xStart, yStart) {
