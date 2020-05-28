@@ -144,6 +144,9 @@ class Board extends React.Component {
                         case faChessBishop:
                             this.checkDirections(number.piece.color, position[0], position[1], [[-1, -1], [-1, 1], [1, -1], [1, 1]]);
                             break;
+                        case faChessKing:
+                            this.checkDirections(number.piece.color, position[0], position[1], [[-1, 0], [1, 0], [0, -1], [0, 1], [-1, -1], [-1, 1], [1, -1], [1, 1]], 1);
+                            break;
                         case faChessKnight:
                             this.checkKnight(number.piece.color, position[0], position[1]);
                             break;
@@ -156,7 +159,7 @@ class Board extends React.Component {
     }
 
     placePieceAtNumber(number) {
-	    // get the piece (if applicable) that is currently moving and whether it is possible for this piece to be placed at the specified number
+	    // get the piece that is currently moving (if applicable) and whether it is possible for this piece to be placed at the specified number
 	    let movingPiece = null;
 	    let possible = false;
         for (let i = 0; i < this.state.rows.length; i++) {
@@ -262,14 +265,15 @@ class Board extends React.Component {
         this.setState({rows: newRows});
     }
 
-    checkDirections(color, xStart, yStart, directions) {
+    checkDirections(color, xStart, yStart, directions, maxDistance = null) {
         let newRows = this.state.rows;
         for (let i = 0; i < directions.length; i++) {
             let xDirection = directions[i][0];
             let yDirection = directions[i][1];
             let xCheck = xStart + xDirection;
             let yCheck = yStart + yDirection;
-            while ((xDirection === 0 || (xDirection < 0 && xCheck > -1) || (xDirection > 0 && xCheck < this.state.totalColumns)) && (yDirection === 0 || (yDirection < 0 && yCheck > -1) || (yDirection > 0 && yCheck < this.state.totalRows))) {
+            let currentDistance = 1;
+            while ((xDirection === 0 || (xDirection < 0 && xCheck > -1) || (xDirection > 0 && xCheck < this.state.totalColumns)) && (yDirection === 0 || (yDirection < 0 && yCheck > -1) || (yDirection > 0 && yCheck < this.state.totalRows)) && (maxDistance === null || currentDistance <= maxDistance)) {
                 if (newRows[yCheck][xCheck].piece) {
                     if (newRows[yCheck][xCheck].piece.color !== color) {
                         newRows[yCheck][xCheck].possible = true;
@@ -281,6 +285,7 @@ class Board extends React.Component {
                 newRows[yCheck][xCheck].possible = true;
                 xCheck = xCheck + xDirection;
                 yCheck = yCheck + yDirection;
+                currentDistance++;
             }
         }
         this.setState({rows: newRows});
