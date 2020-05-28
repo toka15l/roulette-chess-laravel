@@ -128,28 +128,71 @@ class Board extends React.Component {
         this.setState({rows: newRows});
     }
 
-	clickPiece(number) {
-        if (number.piece) {
-            let position = this.pickupPieceAtNumber(number);
-            // set possible moves
-            if (this.state.rows[position[1]][position[0]].moving) {
-                switch (number.piece.type) {
-                    case faChessQueen:
-                        this.checkDirections(number.piece.color, position[0], position[1], [[-1, 0], [1, 0], [0, -1], [0, 1], [-1, -1], [-1, 1], [1, -1], [1, 1]]);
-                        break;
-                    case faChessRook:
-                        this.checkDirections(number.piece.color, position[0], position[1], [[-1, 0], [1, 0], [0, -1], [0, 1]]);
-                        break;
-                    case faChessBishop:
-                        this.checkDirections(number.piece.color, position[0], position[1], [[-1, -1], [-1, 1], [1, -1], [1, 1]]);
-                        break;
-                    case faChessKnight:
-                        this.checkKnight(number.piece.color, position[0], position[1]);
-                        break;
-                    case faChessPawn:
-                        this.checkPawn(number.piece.color, position[0], position[1]);
+    clickNumber(number) {
+	    if (this.placePieceAtNumber(number)) {
+
+        } else {
+            if (number.piece) {
+                let position = this.pickupPieceAtNumber(number);
+                // set possible moves
+                if (this.state.rows[position[1]][position[0]].moving) {
+                    switch (number.piece.type) {
+                        case faChessQueen:
+                            this.checkDirections(number.piece.color, position[0], position[1], [[-1, 0], [1, 0], [0, -1], [0, 1], [-1, -1], [-1, 1], [1, -1], [1, 1]]);
+                            break;
+                        case faChessRook:
+                            this.checkDirections(number.piece.color, position[0], position[1], [[-1, 0], [1, 0], [0, -1], [0, 1]]);
+                            break;
+                        case faChessBishop:
+                            this.checkDirections(number.piece.color, position[0], position[1], [[-1, -1], [-1, 1], [1, -1], [1, 1]]);
+                            break;
+                        case faChessKnight:
+                            this.checkKnight(number.piece.color, position[0], position[1]);
+                            break;
+                        case faChessPawn:
+                            this.checkPawn(number.piece.color, position[0], position[1]);
+                    }
                 }
             }
+        }
+    }
+
+    placePieceAtNumber(number) {
+	    let movingPiece = null;
+	    let possible = false;
+        for (let i = 0; i < this.state.rows.length; i++) {
+            for (let j = 0; j < this.state.rows[i].length; j++) {
+                if (this.state.rows[i][j].moving) {
+                    movingPiece = this.state.rows[i][j];
+                }
+                if (this.state.rows[i][j].number === number.number && this.state.rows[i][j].possible) {
+                    possible = true;
+                }
+            }
+        }
+        if (movingPiece && possible) {
+            let newRows = this.state.rows;
+            for (let i = 0; i < newRows.length; i++) {
+                for (let j = 0; j < newRows[i].length; j++) {
+                    newRows[i][j].possible = false;
+                    newRows[i][j].moving = false;
+                    if (newRows[i][j].number === number.number) {
+                        newRows[i][j].piece = movingPiece.piece;
+                        newRows[i][j].piece.hasMoved = true;
+                    }
+                }
+            }
+            for (let i = 0; i < newRows.length; i++) {
+                for (let j = 0; j < newRows[i].length; j++) {
+                    if (newRows[i][j].number === movingPiece.number) {
+                        newRows[i][j].piece = null;
+                    }
+                }
+            }
+            this.setState({rows: newRows});
+            return true;
+        } else {
+            return false;
         }
     }
 
@@ -244,7 +287,7 @@ class Board extends React.Component {
 		const rows = this.state.rows.map((row, i) => {
 			const currentRow = row.map((number) => {
                 return (
-                    <div className={`square ${number.piece ? 'cursor-pointer' : ''}`} onClick={() => this.clickPiece(number)} key={number.number}>
+                    <div className={`square ${number.piece ? 'cursor-pointer' : ''}`} onClick={() => this.clickNumber(number)} key={number.number}>
                         <span className={`number ${number.possible ? 'possible' : number.color}`}>{number.number}</span>
                         {number.piece ? <FontAwesomeIcon className={`piece piece-${number.piece.color} ${number.moving ? 'moving' : ''}`} icon={number.piece.type}/> : ''}
                     </div>
