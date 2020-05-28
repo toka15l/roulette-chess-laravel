@@ -129,9 +129,7 @@ class Board extends React.Component {
     }
 
     clickNumber(number) {
-	    if (this.placePieceAtNumber(number)) {
-
-        } else {
+	    if (!this.placePieceAtNumber(number)) {
             if (number.piece) {
                 let position = this.pickupPieceAtNumber(number);
                 // set possible moves
@@ -158,6 +156,7 @@ class Board extends React.Component {
     }
 
     placePieceAtNumber(number) {
+	    // get the piece (if applicable) that is currently moving and whether it is possible for this piece to be placed at the specified number
 	    let movingPiece = null;
 	    let possible = false;
         for (let i = 0; i < this.state.rows.length; i++) {
@@ -172,6 +171,7 @@ class Board extends React.Component {
         }
         if (movingPiece && possible) {
             let newRows = this.state.rows;
+            // place piece at new location, mark piece as having moved
             for (let i = 0; i < newRows.length; i++) {
                 for (let j = 0; j < newRows[i].length; j++) {
                     newRows[i][j].possible = false;
@@ -182,6 +182,7 @@ class Board extends React.Component {
                     }
                 }
             }
+            // remove piece from old location
             for (let i = 0; i < newRows.length; i++) {
                 for (let j = 0; j < newRows[i].length; j++) {
                     if (newRows[i][j].number === movingPiece.number) {
@@ -190,8 +191,10 @@ class Board extends React.Component {
                 }
             }
             this.setState({rows: newRows});
+            // return true to signal that piece has been moved
             return true;
         } else {
+            // return false to signal that piece movement was not possible during this operation
             return false;
         }
     }
