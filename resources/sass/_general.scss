@@ -1,0 +1,55 @@
+.cursor-pointer {
+    cursor: pointer;
+}
+
+.green-background {
+    background-color: $felt-green;
+}
+
+.board {
+    .square {
+        display: flex;
+        justify-content: center;
+        border: 1px solid white;
+    }
+
+    .number {
+        display: inline-block;
+        margin: 0;
+        width: 60px;
+        height: 50px;
+        font-weight: bold;
+        color: white;
+        font-size: 10px;
+        padding-left: 2px;
+    }
+
+    .red {
+        background-color: red;
+    }
+
+    .black {
+        background-color: black;
+    }
+
+    .piece {
+        position: absolute;
+        width: 60px;
+        height: 50px;
+        padding: 10px;
+   }
+    .piece-black {
+        color: $piece-black;
+    }
+    .piece-white {
+        color: $piece-white;
+    }
+
+    .moving {
+        opacity: 0.5;
+    }
+
+    .possible {
+        background-color: #2d995b;
+    }
+}
